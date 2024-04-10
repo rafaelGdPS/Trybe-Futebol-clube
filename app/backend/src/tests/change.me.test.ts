@@ -4,42 +4,36 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+import SequelizeTeam from '../database/models/SequelizeTeam'
 
 import { Response } from 'superagent';
+import { mockTeam, mockTeams } from './mock/teamMock';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+describe('Testes de integração da tabela teams', function () {
 
-  // let chaiHttpResponse: Response;
+beforeEach(() => {
+  sinon.restore()
+})
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
+  it('Testando o retorno de todos os teams', async function () {
+    sinon.stub(SequelizeTeam, 'findAll').resolves(mockTeams as any)
 
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
+    const {body, status} = await chai.request(app).get('/teams')
 
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
+    expect(status).to.be.equal(200);
+    expect(body).to.deep.equal(mockTeam);
 
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
   });
+  it('Testando retordo por busca de id', async function () {
+    sinon.stub(SequelizeTeam, 'findByPk').resolves(mockTeam as any)
+
+    const { body, status } = await chai.request(app).get('/teams/1')
+
+    expect(status).to.equal(200);
+    expect(body).to.deep.equal(mockTeam);
+  })
 });
