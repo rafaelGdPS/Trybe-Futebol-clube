@@ -50,4 +50,11 @@ describe('Teste de usuarios', function () {
     expect(status).to.equal(200);
     expect(body).to.deep.equal(userMock.validToken);
   })
+  it('Testando login/role com requisição correta', async function () {
+    sinon.stub(SequelizeUser, 'findOne').resolves(userMock.existUser as any)
+    const {body, status} = await chai.request(app).post('/login/role')
+
+    expect(status).to.equal(200);
+    expect(body).to.deep.equal(userMock.existUser.role);
+  })
 })
