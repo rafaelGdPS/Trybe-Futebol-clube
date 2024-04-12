@@ -4,7 +4,7 @@ import { IUser } from "../../../src/Interfaces/IUser";
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<IUser>>( 'users' ,{
+    return queryInterface.createTable<Model<IUser>>('users' ,{
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
