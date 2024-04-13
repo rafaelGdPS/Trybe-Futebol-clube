@@ -19,10 +19,7 @@ export default class MatchModel implements IMatchModel {
       },
       ],
     });
-    // const allMatches = matches
-    //   .map(({ id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }) => (
-    //     { id, homeTeamId, homeTeamGoals, awayTeamId, awayTeamGoals, inProgress }
-    //   ));
+
     return matches;
   }
 }

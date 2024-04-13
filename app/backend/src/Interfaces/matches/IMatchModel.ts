@@ -1,5 +1,5 @@
 import { IMatch } from './IMatch';
 
 export interface IMatchModel {
-  getAll(): Promise<IMatch [] >
+  getAll(): Promise<IMatch [] >;
 }
