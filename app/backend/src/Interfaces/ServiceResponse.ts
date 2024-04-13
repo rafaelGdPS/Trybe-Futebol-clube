@@ -1,9 +1,10 @@
 type ServiceResponseErrorType = 'INVALID_DATA' | 'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT';
 type ServiceResponseSUCCESSType = 'SUCCESSFUL' | 'CREATED' | 'UPDATED' | 'DELETED';
 
+export type ServiceMessage = { message: string };
 export type ServiceResponseError = {
   status: ServiceResponseErrorType,
-  data: { message: string }
+  data: ServiceMessage
 };
 
 export type ServiceResponseSuccess<T> = {

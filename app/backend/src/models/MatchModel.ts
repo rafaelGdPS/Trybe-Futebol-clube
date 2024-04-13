@@ -22,4 +22,13 @@ export default class MatchModel implements IMatchModel {
 
     return matches;
   }
+
+  async findById(id: number): Promise<IMatch | null> {
+    const match = await this.model.findByPk(id);
+    return match;
+  }
+
+  async updated(match: IMatch, id: number): Promise<void> {
+    await this.model.update(match, { where: { id } });
+  }
 }
