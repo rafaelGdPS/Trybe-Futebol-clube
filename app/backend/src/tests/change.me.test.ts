@@ -6,10 +6,12 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import SequelizeTeam from '../database/models/SequelizeTeam'
 import SequelizeUser from '../database/models/SequelizeUser'
+import SequelizeMatch from '../database/models/SequelizeMatch'
 
 import { Response } from 'superagent';
 import { mockTeam, mockTeams } from './mock/teamMock';
 import userMock from './mock/userMock';
+import matchMock from './mock/matchMock';
 
 
 chai.use(chaiHttp);
@@ -43,6 +45,9 @@ beforeEach(() => {
 });
 
 describe('Teste de usuarios', function () {
+  beforeEach(() => {
+    sinon.restore()
+  })
   it('Testando login com requisição correta', async function () {
     sinon.stub(SequelizeUser, 'findOne').resolves(userMock.existUser as any)
     const {body, status} = await chai.request(app).post('/login')
@@ -58,3 +63,16 @@ describe('Teste de usuarios', function () {
     expect(body).to.deep.equal(userMock.existUser.role);
   })
 })
+describe(' Testando a rota /matches ', function () {
+  beforeEach(() => {
+    sinon.restore()
+  })
+  it('testanto se a rota matches Volta todos os resultados ', async function () {
+    sinon.stub(SequelizeMatch, 'findAll').resolves(matchMock.allMatches as any)
+
+    const {body, status} = await chai.request(app).get('/matches')
+
+    expect(status).to.equal(200);
+    expect(body).to.deep.equal(matchMock.allMatches);
+  })
+}) 

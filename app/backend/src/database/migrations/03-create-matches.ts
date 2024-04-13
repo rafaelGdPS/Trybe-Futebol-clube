@@ -3,7 +3,7 @@ import { IMatch } from "../../../src/Interfaces/matches/IMatch";
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable('matches', {
+    return queryInterface.createTable<Model<IMatch>>('matches', {
       id: {
         allowNull:false,
         autoIncrement: true,
