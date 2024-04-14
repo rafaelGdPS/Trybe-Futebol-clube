@@ -28,7 +28,10 @@ export default class MatchModel implements IMatchModel {
     return match;
   }
 
-  async updated(match: IMatch, id: number): Promise<void> {
+  async updated(match: IMatch, id: number): Promise<IMatch | null> {
     await this.model.update(match, { where: { id } });
+    const findMatch = this.model.findByPk(id);
+    if (!findMatch) return null;
+    return findMatch;
   }
 }

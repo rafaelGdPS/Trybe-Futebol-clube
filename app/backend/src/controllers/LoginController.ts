@@ -15,7 +15,7 @@ export default class LoginController {
   }
 
   public async role(req: Request, res: Response) {
-    const { email } = req.body;
+    const { email } = req.cookies;
     const { data, status } = await this.loginService.role(email);
     res.status(mapStatusHTTP(status)).json(data);
   }

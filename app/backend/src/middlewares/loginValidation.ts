@@ -27,14 +27,11 @@ class LoginValidation {
 
     const validToken = JWT.verify(token);
 
-    req.body = validToken;
-
-    console.log(validToken);
-
     if (validToken === 'Token must be a valid token') {
       return res.status(401).json({ message: validToken });
     }
 
+    req.cookies = validToken;
     next();
   }
 }
