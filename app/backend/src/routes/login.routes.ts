@@ -8,7 +8,7 @@ const router = Router();
 
 router.post(
   '/',
-  Validation.validations,
+  Validation.validationsLogin,
   (req: Request, res: Response) => loginController.login(req, res),
 );
 router.get(

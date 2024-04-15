@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import JWT from '../utils/JWT';
 
-class LoginValidation {
-  static validations(req: Request, res: Response, next: NextFunction) {
+class Validations {
+  static validationsLogin(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -34,6 +34,15 @@ class LoginValidation {
     req.cookies = validToken;
     next();
   }
+
+  static validateTeams(req: Request, res: Response, next: NextFunction) {
+    const { homeTeamId, awayTeamId } = req.body;
+    if (homeTeamId === awayTeamId) {
+      return res.status(422)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
+    next();
+  }
 }
 
-export default LoginValidation;
+export default Validations;
