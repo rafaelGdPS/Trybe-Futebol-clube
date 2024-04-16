@@ -16,7 +16,6 @@ export default class TeamController {
   public async getTeamById(req: Request, res: Response) {
     const id = Number(req.params.id);
     const { data, status } = await this.teamService.getTeamById(id);
-    console.log(status);
 
     res.status(mapStatusHTTP(status)).json(data);
   }

@@ -14,12 +14,7 @@ export default class MatchController {
     const matches = data as IMatch[];
     let allMatches = data;
     if (inProgress) {
-      const matchesFiltered = matches.filter((match) => {
-        console.log(typeof match.inProgress);
-        console.log(typeof inProgress);
-
-        return JSON.stringify(match.inProgress) === inProgress;
-      });
+      const matchesFiltered = matches.filter((match) => JSON.stringify(match.inProgress) === inProgress);
 
       allMatches = matchesFiltered;
     }

@@ -43,6 +43,31 @@
   },
  ]
 
+ const validRequest = {
+  homeTeamId: 16,
+  awayTeamId: 8, 
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+ }
+ const invalidRequest = {
+  homeTeamId: 8,
+  awayTeamId: 8, 
+  homeTeamGoals: 2,
+  awayTeamGoals: 2
+ }
+
+ const newMatch = {
+  id: 1,
+  homeTeamId: 16,
+  homeTeamGoals: 2,
+  awayTeamId: 8,
+  awayTeamGoals: 2,
+  inProgress: true
+}
+
  export default {
-  allMatches
+  allMatches,
+  validRequest,
+  newMatch,
+  invalidRequest
  }
