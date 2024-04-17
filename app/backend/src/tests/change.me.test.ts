@@ -12,6 +12,7 @@ import { mockTeam, mockTeams } from './mock/teamMock';
 import userMock from './mock/userMock';
 import matchMock from './mock/matchMock';
 import Validations from '../middlewares/loginValidation';
+import { leaderboardMock } from './mock/leaderboardMock';
 
 
 chai.use(chaiHttp);
@@ -102,12 +103,15 @@ describe(' Testando a rota /matches ', function () {
   })
   describe('Testando rota /leaderboard', function () {
     it('Testando a rota /leaderboard/home', async function () {
+
+      sinon.stub(SequelizeTeam, 'findAll').resolves(mockTeams as any);
+      sinon.stub(SequelizeMatch, 'findAll').resolves(matchMock.allMatches as any)
     
 
       const {status, body} = await chai.request(app).get('/leaderboard/home')
       expect(status).to.equal(200);
       
-
+      expect(body).to.deep.equal(leaderboardMock)
     })
   })
 }) 

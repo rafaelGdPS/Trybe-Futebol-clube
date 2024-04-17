@@ -22,14 +22,16 @@ const INITIAL_VALUE = {
   totalLosses: 0,
   goalsFavor: 0,
   goalsOwn: 0,
-
+  goalsBalance: 0,
+  efficiency: 0,
 };
 
 const generateLeaderBoard = (matches: IMatch[], name: string): Ileaderboard => {
   const j = matches.length;
   return matches.reduce((acc, match) => {
     const { d, e, p, v } = tableValue(match);
-
+    const gp = acc.goalsFavor + match.homeTeamGoals;
+    const gc = acc.goalsOwn + match.awayTeamGoals;
     return {
       name,
       totalPoints: acc.totalPoints + p,
@@ -37,9 +39,10 @@ const generateLeaderBoard = (matches: IMatch[], name: string): Ileaderboard => {
       totalVictories: acc.totalVictories + v / 3,
       totalDraws: acc.totalDraws + e,
       totalLosses: acc.totalLosses + d,
-      goalsFavor: acc.goalsFavor + match.homeTeamGoals,
-      goalsOwn: acc.goalsOwn + match.awayTeamGoals,
-
+      goalsFavor: gp,
+      goalsOwn: gc,
+      goalsBalance: gp - gc,
+      efficiency: acc.efficiency + (p / (j * 3)) * 100,
     };
   }, INITIAL_VALUE);
 };
