@@ -23,8 +23,10 @@ const INITIAL_VALUE = {
   goalsFavor: 0,
   goalsOwn: 0,
   goalsBalance: 0,
-  efficiency: 0,
+  efficiency: '0',
 };
+
+const test = (acc: string, p: number, j: number) => (Number(acc) + (p / (j * 3)) * 100).toFixed(2);
 
 const generateLeaderBoard = (matches: IMatch[], name: string): Ileaderboard => {
   const j = matches.length;
@@ -32,6 +34,7 @@ const generateLeaderBoard = (matches: IMatch[], name: string): Ileaderboard => {
     const { d, e, p, v } = tableValue(match);
     const gp = acc.goalsFavor + match.homeTeamGoals;
     const gc = acc.goalsOwn + match.awayTeamGoals;
+
     return {
       name,
       totalPoints: acc.totalPoints + p,
@@ -42,7 +45,7 @@ const generateLeaderBoard = (matches: IMatch[], name: string): Ileaderboard => {
       goalsFavor: gp,
       goalsOwn: gc,
       goalsBalance: gp - gc,
-      efficiency: acc.efficiency + (p / (j * 3)) * 100,
+      efficiency: `${test(acc.efficiency, p, j)}`,
     };
   }, INITIAL_VALUE);
 };

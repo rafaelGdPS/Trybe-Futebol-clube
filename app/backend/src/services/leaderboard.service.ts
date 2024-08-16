@@ -15,15 +15,22 @@ export default class LeaderBoardService {
     const allMatches = await this.matchModel.getAll();
 
     const matchFinished = allMatches.filter((match) => match.inProgress === false);
-    console.log(matchFinished);
 
     const leaderboard = allTeams.map((team) => {
       const matches = matchFinished.filter((match) => team.id === match.homeTeamId);
-      console.log(team.teamName);
-
       return generateLeaderBoard(matches, team.teamName);
     });
+    const leaderboardClassification = leaderboard.sort((a, b) => {
+      if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+      if (a.totalPoints === b.totalPoints
+        && b.totalVictories !== a.totalVictories) return b.totalVictories - a.totalVictories;
+      if (a.totalVictories === b.totalVictories
+        && b.goalsBalance !== a.goalsBalance) return b.goalsBalance - a.goalsBalance;
+      if (a.goalsBalance === b.goalsBalance
+        && b.goalsFavor !== a.goalsFavor) return b.goalsFavor - a.goalsFavor;
+      return 0;
+    });
 
-    return { status: 'SUCCESSFUL', data: leaderboard };
+    return { status: 'SUCCESSFUL', data: leaderboardClassification };
   }
 }
